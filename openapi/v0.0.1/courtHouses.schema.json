@@ -56,7 +56,7 @@
         }
       }
     },
-    "definitions": {
+    "$defs": {
       "venueContact": {
         "title": "Contact Details for a venue",
         "type": "object",
