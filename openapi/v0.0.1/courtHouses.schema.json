@@ -48,7 +48,7 @@
                 },
                 "venueContact": {
                   "description": "Contact details for the venue",
-                  "$ref": "#/definitions/venueContact"
+                  "$ref": "#/$defs/venueContact"
                 }
               }
             }
