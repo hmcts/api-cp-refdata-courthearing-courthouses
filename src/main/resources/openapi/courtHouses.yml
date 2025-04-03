@@ -2,11 +2,11 @@ openapi: 3.0.0
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/HMCTS-DTS/api-cp-refdata-courthearing-courthouses/0.0.1
+    url: https://virtserver.swaggerhub.com/HMCTS-DTS/api-cp-refdata-courthearing-courthouses/0.0.2
 
 info:
   description: Court House API
-  version: 0.0.1
+  version: 0.0.2
   title: api-cp-refdata-courthearing-courthouses
   contact:
     email: api@hmcts.com
