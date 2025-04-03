@@ -34,7 +34,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: "https://raw.githubusercontent.com/hmcts/api-cp-refdata-courthearing-courthouses/refs/heads/master/openapi/v0.0.1/courtHouses.schema.json"
+                  $ref: "courtHouses.schema.json"
               example:
                 courtHouse:
                   courtHouseType: crown
