@@ -20,6 +20,10 @@ repositories {
 
 dependencies {}
 
+jar {
+    archiveClassifier.set("")
+}
+
 bootJar {
     archiveFileName = "api-cp-refdata-courthearing-courthouses.jar"
 
@@ -32,3 +36,4 @@ wrapper {
     distributionType = Wrapper.DistributionType.ALL
 }
 
+mainClassName = 'uk.gov.hmcts.cp.Application'
