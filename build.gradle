@@ -1,16 +1,9 @@
 plugins {
-    id 'application'
-    id 'org.springframework.boot' version '3.4.4'
+    id 'java-library'
 }
 
 group = 'uk.gov.hmcts.cp'
 version = '0.0.1'
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
 
 repositories {
     mavenLocal()
@@ -18,22 +11,8 @@ repositories {
     maven { url 'https://jitpack.io' }
 }
 
-dependencies {}
-
-jar {
-    archiveClassifier.set("")
-}
-
-bootJar {
-    archiveFileName = "api-cp-refdata-courthearing-courthouses.jar"
-
-    manifest {
-        attributes('Implementation-Version': project.version.toString())
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
-
-wrapper {
-    distributionType = Wrapper.DistributionType.ALL
-}
-
-mainClassName = 'uk.gov.hmcts.cp.Application'
