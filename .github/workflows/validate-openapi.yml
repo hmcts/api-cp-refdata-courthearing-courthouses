@@ -44,7 +44,7 @@ jobs:
           
           # Run validation using the existing script
           echo "Running OpenAPI validation script..."
-          python $GITHUB_WORKSPACE/.github/scripts/validate_openapi.py $GITHUB_WORKSPACE/openapi || exit 1
+          python $GITHUB_WORKSPACE/.github/scripts/validate_openapi.py $GITHUB_WORKSPACE/src/main/resources/openapi || exit 1
           echo "Validation script completed."
 
           # Check for validation results
