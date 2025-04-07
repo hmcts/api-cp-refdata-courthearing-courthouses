@@ -17,20 +17,20 @@ info:
 paths:
   /courthouses/{court_id}:
     get:
-  
+
       parameters:
-      
+
         - in: path
           name: court_id
           required: true
           description: Unique reference number for the court house
           schema:
             type: string
-       
+
       responses:
         '200':
           description:  court details found
-          
+
           content:
             application/json:
               schema:
@@ -50,7 +50,8 @@ paths:
                         venueEmail: "court1@moj.gov.uk"
                         primaryContactName: "John Doe"
                         venueSupport: "0330 566 5561"
-    
-      
+
+
         '400':
           description: bad input parameter
+
