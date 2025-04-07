@@ -1,18 +1,23 @@
 plugins {
-    id 'java-library'
+  id 'java-library'
 }
 
 group = 'uk.gov.hmcts.cp'
 version = '0.0.1'
 
 repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
+  mavenLocal()
+  mavenCentral()
+  maven {
+    url = 'https://jitpack.io'
+  }
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
+
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
 }
