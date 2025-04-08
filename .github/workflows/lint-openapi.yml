@@ -2,9 +2,6 @@ name: Linting of OpenAPI documents on Pull Requests
 
 on:
   pull_request:
-    paths:
-      - '**/*.yaml'
-      - '**/*.yml'
     branches:
       - master
   # Allows you to run this workflow manually from the Actions tab
