@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "id": "http://justice.gov.uk/courtHouses.schema.json",
+    "$id": "http://justice.gov.uk/courtHouses.schema.json",
     "title": "courtHouses",
     "type": "object",
     "properties": {

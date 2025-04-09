@@ -1,0 +1,32 @@
+{
+  "courtHouse": {
+    "courtHouseType": "crown",
+    "courtHouseCode": "LND001",
+    "courtHouseName": "Central London Crown Court",
+    "courtHouseDescription": "Main Crown Court in London handling major cases",
+    "courtRoom": [
+      {
+        "courtRoomNumber": 1,
+        "courtRoomId": 1001,
+        "courtRoomName": "Courtroom 1",
+        "venueContact": {
+          "venueTelephone": "01772 844700",
+          "venueEmail": "court1@moj.gov.uk",
+          "primaryContactName": "Jane Smith",
+          "venueSupport": "0330 566 5561"
+        }
+      },
+      {
+        "courtRoomNumber": 2,
+        "courtRoomId": 1002,
+        "courtRoomName": "Courtroom 2",
+        "venueContact": {
+          "venueTelephone": "01772 844701",
+          "venueEmail": "court2@moj.gov.uk",
+          "primaryContactName": "John Doe",
+          "venueSupport": "0330 566 5562"
+        }
+      }
+    ]
+  }
+}
