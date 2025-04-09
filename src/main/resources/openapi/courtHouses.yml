@@ -17,7 +17,10 @@ info:
 paths:
   /courthouses/{court_id}:
     get:
-
+      description: Retrieve details of a court house by court_id
+      operationId: getCourthouseByCourtId
+      tags:
+        - court house
       parameters:
 
         - in: path
