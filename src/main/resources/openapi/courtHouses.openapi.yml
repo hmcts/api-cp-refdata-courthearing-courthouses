@@ -1,18 +1,17 @@
 openapi: 3.0.0
 servers:
-  # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/HMCTS-DTS/api-cp-refdata-courthearing-courthouses/0.0.2
+    url: https://virtserver.swaggerhub.com/HMCTS-DTS/api-cp-refdata-courthearing-courthouses/0.0.0
 
 info:
-  description: Court House API
-  version: 0.0.2
-  title: api-cp-refdata-courthearing-courthouses
+  description: Reference Data API providing information on Court Houses associated with a Court Hearing
+  version: 0.0.0
+  title: API CP Refdata Court Hearing Court Houses
   contact:
-    email: api@hmcts.com
+    email: no-reply@hmcts.com
   license:
     name: MIT
-    url: 'https://raw.githubusercontent.com/hmcts/api-cp-refdata-courthearing-courthouses/refs/heads/master/LICENSE'
+    url: 'https://opensource.org/licenses/MIT'
 
 paths:
   /courthouses/{court_id}:
@@ -37,7 +36,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: "courtHouses.schema.json"
+                  $ref: "schema/courtHouses.json"
               example:
                 courtHouse:
                   courtHouseType: crown

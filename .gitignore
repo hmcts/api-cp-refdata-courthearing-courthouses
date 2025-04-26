@@ -1,8 +1,9 @@
 .gradle
 /build/
-!gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper
+gradlew
+gradlew.bat
 *.class
-bin/main/application.yaml
 
 ### STS ###
 .apt_generated
@@ -22,7 +23,7 @@ node_modules
 package.json
 package-lock.json
 
-.DS_Store
-
-applicationinsights-agent-*.jar
 *.log
+
+.DS_Store
+*/.DS_Store
