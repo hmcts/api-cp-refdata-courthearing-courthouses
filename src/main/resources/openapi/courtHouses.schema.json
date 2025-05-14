@@ -138,9 +138,9 @@
           "type": "string",
           "description": "United Kingdom"
         }
-      }
-    },
-    "additionalProperties": false
+      },
+      "additionalProperties": false
+    }
   }
 }
   
