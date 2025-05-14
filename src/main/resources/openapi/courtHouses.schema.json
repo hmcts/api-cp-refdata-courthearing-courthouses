@@ -51,7 +51,7 @@
                 "$ref": "#/$defs/venueContact"
               },
               "address": {
-                "description": "Address of courtHouse",
+                "description": "Courthouse address",
                 "$ref": "#/$defs/address"
               }
             }
@@ -110,7 +110,7 @@
     },
 
     "address": {
-      "title": "Address of courtHouses",
+      "title": "Courthouse address",
       "type": "object",
       "properties": {
         "address1": {
@@ -140,6 +140,7 @@
         }
       }
     }
-  }
+  },
+  "additionalProperties": false
 }
   
