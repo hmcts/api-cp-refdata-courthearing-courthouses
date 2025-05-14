@@ -9,6 +9,30 @@ on:
   workflow_dispatch:
 
 jobs:
+  validate-openapi-links:
+    runs-on: ubuntu-latest
+    env:
+      FILE_PATH_OPENAPI: "src/main/resources/openapi"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Find OpenAPI file
+        id: find_spec
+        run: |
+          FILE=$(find ${FILE_PATH_OPENAPI} -name "*.openapi.yml" | head -n 1)
+          echo "openapi_file=$FILE" >> $GITHUB_OUTPUT
+
+      - name: Assert disallowed URLs are not present
+        run: |
+          DISALLOWED_DOMAINS="cjscp\.org\.uk|service\.gov\.uk|justice\.gov\.uk|hmcts\.net|ejudiciary\.net"
+          if grep -E "$DISALLOWED_DOMAINS" "${{ steps.find_spec.outputs.openapi_file }}"; then
+            echo "❌ Error: Found disallowed internal URLs in OpenAPI spec."
+            exit 1
+          else
+            echo "✅ No disallowed internal URLs found."
+          fi
+
   json-lint:
     runs-on: ubuntu-latest
     steps:

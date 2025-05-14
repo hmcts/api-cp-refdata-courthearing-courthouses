@@ -21,7 +21,6 @@ paths:
       tags:
         - court house
       parameters:
-
         - in: path
           name: court_id
           required: true
@@ -31,28 +30,104 @@ paths:
 
       responses:
         '200':
-          description:  court details found
-
+          description: court details found
           content:
             application/json:
               schema:
-                  $ref: "schema/courtHouses.json"
-              example:
-                courtHouse:
-                  courtHouseType: crown
-                  courtHouseCode: CH123
-                  courtHouseName: Central Crown Court
-                  courtHouseDescription: The main court for crown-level trials in the region.
-                  courtRoom:
-                    - courtRoomNumber: 1
-                      courtRoomId: 1001
-                      courtRoomName: Courtroom A
-                      venueContact:
-                        venueTelephone: "01772 844700"
-                        venueEmail: "court1@moj.gov.uk"
-                        primaryContactName: "John Doe"
-                        venueSupport: "0330 566 5561"
-
-
+                $ref: "#/components/schemas/CourtHouse"
         '400':
           description: bad input parameter
+
+components:
+  schemas:
+    CourtHouse:
+      description: The court house that owns the court rooms
+      type: object
+      properties:
+        courtHouseType:
+          description: Specifies the type of court
+          type: string
+          enum:
+            - crown
+            - magistrate
+        courtHouseCode:
+          description: Links to the court that is responsible for the courtrooms
+          type: string
+        courtHouseName:
+          description: Name of the court house
+          type: string
+        courtHouseDescription:
+          description: Description of the court
+          type: string
+        courtRoom:
+          type: array
+          items:
+            description: The court room that owns the court rooms
+            type: object
+            properties:
+              courtRoomNumber:
+                description: Court room number in court
+                type: integer
+              courtRoomId:
+                description: Ref data id (EPIMS or OU Court id)
+                type: integer
+              courtRoomName:
+                description: Name for the court room
+                type: string
+              venueContact:
+                description: Contact details for the venue
+                type: object
+                properties:
+                  venueTelephone:
+                    description: Telephone number for the venue
+                    title: Venue Telephone
+                    type: string
+                    default: ''
+                    example: '01772 844700'
+                    pattern: "^.*$"
+                  venueEmail:
+                    description: Email for the venue
+                    title: Venue Email
+                    type: string
+                    default: ''
+                    example: 'court1@moj.gov.uk'
+                    pattern: "^.*$"
+                  primaryContactName:
+                    description: Name for contact of court
+                    title: Primary Contact Name
+                    type: string
+                    default: ''
+                    example: 'Name'
+                    pattern: "^.*$"
+                  venueSupport:
+                    description: National contact number for MOJ Courts and Venues
+                    title: Venue Support
+                    type: string
+                    default: ''
+                    example: '0330 566 5561'
+                    pattern: "^.*$"
+                additionalProperties: false
+              address:
+                description: Courthouse address
+                type: object
+                properties:
+                  address1:
+                    description: Address Line 1
+                    type: string
+                  address2:
+                    description: Address Line 2
+                    type: string
+                  address3:
+                    description: Address Line 3
+                    type: string
+                  address4:
+                    description: Address Line 4
+                    type: string
+                  postalCode:
+                    description: UK postcode
+                    type: string
+                    pattern: "^(([gG][iI][rR] {0,}0[aA]{2})|(([aA][sS][cC][nN]|[sS][tT][hH][lL]|[tT][dD][cC][uU]|[bB][bB][nN][dD]|[bB][iI][qQ][qQ]|[fF][iI][qQ][qQ]|[pP][cC][rR][nN]|[sS][iI][qQ][qQ]|[iT][kK][cC][aA]) {0,}1[zZ]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yxA-HK-XY]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$"
+                  country:
+                    description: United Kingdom
+                    type: string
+                additionalProperties: false

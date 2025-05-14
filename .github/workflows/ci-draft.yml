@@ -5,6 +5,10 @@ on:
     branches:
       - master
       - main
+  push:
+    branches:
+      - master
+      - main
 
 env:
   FILE_PATH_OPENAPI: "src/main/resources/openapi"
@@ -21,18 +25,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Show Git tags and commit context (diagnostic/debug)
-        run: git tag --list && git log --oneline --decorate
+      #      - name: Show Git tags and commit context (diagnostic/debug)
+      #        run: git tag --list && git log --oneline --decorate
 
       - name: Get short SHA for versioning
         id: vars
         run: |
-          if [ -n "$(git tag)" ]; then
-            LATEST_TAG=$(git describe --tags --abbrev=0)
+          if LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null); then
+            :
           else
             LATEST_TAG="v0.0.0"
           fi
+          echo "🏷️ Latest Git tag resolved to: $LATEST_TAG"
           LATEST_TAG="${LATEST_TAG#v}"
+          
           echo "latest_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
 
           SHORT_SHA=$(git rev-parse --short HEAD)
@@ -64,7 +70,7 @@ jobs:
         env:
           API_NAME: ${{ github.event.repository.name }}
           API_VERSION: ${{ needs.Artefact-Version.outputs.draft_version }}
-        uses: mikefarah/yq@v4.45.1
+        uses: mikefarah/yq@v4.45.4
         with:
           cmd: |
             yq '
@@ -106,36 +112,46 @@ jobs:
           name: updated-openapi-spec
           path: ${{ env.FILE_PATH_OPENAPI }}
 
-#      - name: Set Sonar Project Key and Name
-#        id: sonar_vars
-#        run: |
-#          repo_sanitized="${GITHUB_REPOSITORY//\//_}"
-#          echo "project_key=$repo_sanitized" >> $GITHUB_OUTPUT
-#          echo "project_name=$repo_sanitized" >> $GITHUB_OUTPUT
-#
-#      - name: Analyze with SonarCloud
-#        uses: SonarSource/sonarqube-scan-action@v5.1.0
-#        with:
-#          args: >
-#            -Dsonar.organization=hmcts
-#            -Dsonar.projectKey=${{ steps.sonar_vars.outputs.project_key }}
-#            -Dsonar.projectName=${{ steps.sonar_vars.outputs.project_name }}
-#            -Dsonar.projectVersion=${{ needs.Artefact-Version.outputs.draft_version }}
-#            -Dsonar.sources=src
-#            -Dsonar.java.binaries=build/classes
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #      - name: Set Sonar Project Key and Name
+      #        id: sonar_vars
+      #        run: |
+      #          repo_sanitized="${GITHUB_REPOSITORY//\//_}"
+      #          echo "project_key=$repo_sanitized" >> $GITHUB_OUTPUT
+      #          echo "project_name=$repo_sanitized" >> $GITHUB_OUTPUT
+      #
+      #      - name: Analyze with SonarCloud
+      #        uses: SonarSource/sonarqube-scan-action@v5.1.0
+      #        with:
+      #          args: >
+      #            -Dsonar.organization=hmcts
+      #            -Dsonar.projectKey=${{ steps.sonar_vars.outputs.project_key }}
+      #            -Dsonar.projectName=${{ steps.sonar_vars.outputs.project_name }}
+      #            -Dsonar.projectVersion=${{ needs.Artefact-Version.outputs.draft_version }}
+      #            -Dsonar.sources=src
+      #            -Dsonar.java.binaries=build/classes
+      #        env:
+      #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: Gradle Build and Publish
+      - name: Gradle Build and Publish on Push [Merge]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION=${{ needs.Artefact-Version.outputs.draft_version }}
-          VERSION=${VERSION#v}
 
-          gradle build publish \
+          gradle build \
             -DAPI_SPEC_VERSION=$VERSION \
             -DGITHUB_REPOSITORY=${{ github.repository }} \
             -DGITHUB_ACTOR=${{ github.actor }} \
             -DGITHUB_TOKEN=$GITHUB_TOKEN
+
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "Push event trigger - Publishing artefact"
+            gradle publish \
+              -DAPI_SPEC_VERSION=$VERSION \
+              -DGITHUB_REPOSITORY=${{ github.repository }} \
+              -DGITHUB_ACTOR=${{ github.actor }} \
+              -DGITHUB_TOKEN=$GITHUB_TOKEN
+          else
+            echo "Skipping publish because this is a pull_request"
+          fi

@@ -1,14 +1,27 @@
 plugins {
   id 'java'
-  id 'org.openapi.generator' version '7.12.0'
+  id 'org.openapi.generator' version '7.13.0'
   id 'com.diffplug.spotless' version '7.0.3'
   id 'jacoco'
   id 'maven-publish'
   id "com.github.ben-manes.versions" version "0.52.0"
+  id "org.cyclonedx.bom" version "2.3.0"
 }
 
 group = 'uk.gov.hmcts.cp'
 version = System.getProperty('API_SPEC_VERSION') ?: '0.0.999'
+def githubActor = project.findProperty("github.actor") ?: System.getenv("GITHUB_ACTOR")
+def githubToken = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
+def githubRepo = System.getenv("GITHUB_REPOSITORY")
+
+//debugging
+//    if (githubActor != null) {
+//      println "🔐 Configuring GitHub Packages publishing to: https://maven.pkg.github.com/$githubRepo"
+//    }
+//    println "GitHub Packages publishing required environment variables:"
+//    println " - GITHUB_ACTOR=${githubActor != null ? '✔' : '❌'}"
+//    println " - GITHUB_TOKEN=${githubToken != null ? '✔' : '❌'}"
+//    println " - GITHUB_REPOSITORY=${githubRepo != null ? '✔' : '❌'}"
 
 java {
   sourceCompatibility = JavaVersion.VERSION_21
@@ -36,7 +49,14 @@ tasks.withType(Test).configureEach {
 }
 
 tasks.named('test') {
+  useJUnitPlatform()
+  systemProperty 'API_SPEC_VERSION', System.getProperty('API_SPEC_VERSION', '0.0.0')
   failFast = true
+  testLogging {
+    events "passed", "skipped", "failed"
+    exceptionFormat = 'full'
+    showStandardStreams = true
+  }
 }
 
 tasks.named('jacocoTestReport') {
@@ -79,19 +99,6 @@ publishing {
     }
   }
   repositories {
-    def githubActor = project.findProperty("github.actor") ?: System.getenv("GITHUB_ACTOR")
-    def githubToken = project.findProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
-    def githubRepo = System.getenv("GITHUB_REPOSITORY")
-
-    //debugging
-//    if (githubActor != null) {
-//      println "🔐 Configuring GitHub Packages publishing to: https://maven.pkg.github.com/$githubRepo"
-//    }
-//    println "GitHub Packages publishing required environment variables:"
-//    println " - GITHUB_ACTOR=${githubActor != null ? '✔' : '❌'}"
-//    println " - GITHUB_TOKEN=${githubToken != null ? '✔' : '❌'}"
-//    println " - GITHUB_REPOSITORY=${githubRepo != null ? '✔' : '❌'}"
-
     maven {
       name = "GitHubPackages"
       url = uri("https://maven.pkg.github.com/$githubRepo")
@@ -103,13 +110,40 @@ publishing {
   }
 }
 
+//Creation of Software Bill of Materials
+//https://github.com/CycloneDX/cyclonedx-gradle-plugin
+cyclonedxBom {
+  projectType = "library" // or application
+  includeConfigs = ["runtimeClasspath"]
+  skipConfigs = ["test", "testImplementation"]
+  schemaVersion = "1.6"
+  componentVersion = providers.provider { project.version.toString() }
+  destination = file("$buildDir/reports")
+  includeBuildSystem = true
+  outputName = "bom"
+  outputFormat = "json"
+}
+
 jar {
+  dependsOn tasks.named('cyclonedxBom')
   if (file("CHANGELOG.md").exists()) {
+    println "✅ Including CHANGELOG.md in JAR"
     from('CHANGELOG.md') {
       into 'META-INF'
     }
   } else {
     println "⚠️  CHANGELOG.md not found, skipping inclusion in JAR"
+  }
+
+  def sbomFile = file("$buildDir/reports/bom.json")
+  if (sbomFile.exists()) {
+    println "✅ Including SBOM from ${sbomFile} in JAR"
+    from(sbomFile) {
+      into 'META-INF/sbom'
+      rename { 'bom.json' }
+    }
+  } else {
+    println "⚠️  SBOM (bom.json) not found, skipping inclusion in JAR"
   }
 }
 
@@ -131,6 +165,7 @@ openApiGenerate {
   generateApiTests = true
   cleanupOutput = true
   configOptions = [
+          validateSpec                  : "true",
           dateLibrary                   : "java8",
           interfaceOnly                 : "true",
           hideGenerationTimestamp       : "true",
@@ -157,7 +192,7 @@ tasks.register('downloadFormatter') {
   doLast {
     def file = new File(formatterPath)
     file.parentFile.mkdirs()
-    file.text = new URL(formatterUrl).text
+    file.text = new URI(formatterUrl).toURL().text
   }
 }
 spotless {
@@ -183,17 +218,25 @@ tasks.withType(Checkstyle).configureEach {
 }
 
 ext {
-  springBootVersion = "3.4.4"
+  springBootVersion = "3.4.5"
   lombokVersion = "1.18.38"
 }
 
 dependencies {
   // OpenAPI Generator runtime support
-  implementation 'org.openapitools:openapi-generator-core:7.12.0'
-  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.18.3'
+  implementation 'org.openapitools:openapi-generator-core:7.13.0'
+  implementation 'io.swagger.parser.v3:swagger-parser:2.1.27'
+  implementation 'io.swagger.core.v3:swagger-annotations:2.2.30'
+  implementation 'net.logstash.logback:logstash-logback-encoder:8.1'
+
+  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.19.0'
   implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
   implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
-  implementation 'io.swagger.core.v3:swagger-annotations:2.2.30'
   compileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
   annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
+
+  testImplementation(platform('org.junit:junit-bom:5.12.2'))
+  testImplementation 'org.junit.jupiter:junit-jupiter-api'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

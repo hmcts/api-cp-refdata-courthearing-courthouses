@@ -22,7 +22,7 @@ jobs:
         id: vars
         run: |
           TAG_NAME="${GITHUB_REF#refs/tags/}"
-          VERSION="${TAG_NAME#v}"  # strip 'v' prefix
+          VERSION="${TAG_NAME#v}"
           echo "RELEASED_VERSION=$VERSION" >> $GITHUB_OUTPUT
 
   Update-Spec-Version:
@@ -44,7 +44,7 @@ jobs:
         env:
           API_NAME: ${{ github.event.repository.name }}
           API_VERSION: ${{ needs.Artefact-Version.outputs.RELEASED_VERSION }}
-        uses: mikefarah/yq@v4.45.1
+        uses: mikefarah/yq@v4.45.4
         with:
           cmd: |
             yq '
@@ -91,7 +91,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           VERSION=${{ needs.Artefact-Version.outputs.RELEASED_VERSION }}
-          VERSION=${VERSION#v}
 
           gradle build publish \
             -DAPI_SPEC_VERSION=$VERSION \

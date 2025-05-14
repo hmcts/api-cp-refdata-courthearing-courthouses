@@ -4,6 +4,7 @@ gradle/wrapper
 gradlew
 gradlew.bat
 *.class
+bin
 
 ### STS ###
 .apt_generated
@@ -27,3 +28,4 @@ package-lock.json
 
 .DS_Store
 */.DS_Store
+/*report.html
