@@ -23,7 +23,7 @@ class OpenAPIConfigurationLoaderTest {
 
         Info info = openAPI.getInfo();
         assertNotNull(info);
-        assertEquals("API CP Refdata Court Hearing Court Houses", info.getTitle());
+        assertEquals("Common Platform API Refdata Court Hearing Court Houses", info.getTitle());
         assertEquals("Reference Data API providing information on Court Houses associated with a Court Hearing", info.getDescription());
 
         String apiGitHubRepository = "api-cp-refdata-courthearing-courthouses";
