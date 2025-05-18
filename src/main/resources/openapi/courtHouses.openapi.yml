@@ -4,9 +4,9 @@ servers:
     url: https://virtserver.swaggerhub.com/HMCTS-DTS/api-cp-refdata-courthearing-courthouses/0.0.0
 
 info:
+  title: Common Platform API Refdata Court Hearing Court Houses
   description: Reference Data API providing information on Court Houses associated with a Court Hearing
   version: 0.0.0
-  title: API CP Refdata Court Hearing Court Houses
   contact:
     email: no-reply@hmcts.com
   license:
