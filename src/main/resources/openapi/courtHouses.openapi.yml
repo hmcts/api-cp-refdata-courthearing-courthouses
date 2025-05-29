@@ -50,15 +50,19 @@ components:
           enum:
             - crown
             - magistrate
+          example: "crown"
         courtHouseCode:
           description: Links to the court that is responsible for the courtrooms
           type: string
+          example: "LND001"
         courtHouseName:
           description: Name of the court house
           type: string
+          example: "Central London Crown Court"
         courtHouseDescription:
           description: Description of the court
           type: string
+          example: "Main Crown Court in London handling major cases"
         courtRoom:
           type: array
           items:
