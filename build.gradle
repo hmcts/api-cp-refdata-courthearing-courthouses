@@ -35,6 +35,10 @@ def azureADOArtifactToken = System.getenv("AZURE_DEVOPS_ARTIFACT_TOKEN")
 java {
   sourceCompatibility = JavaVersion.VERSION_21
   targetCompatibility = JavaVersion.VERSION_21
+
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
 }
 
 sourceSets {
@@ -202,7 +206,7 @@ tasks.named('compileJava') {
   dependsOn tasks.named('spotlessApply')
 }
 
-def formatterUrl = 'https://raw.githubusercontent.com/hmcts/api-cp-code-style/refs/heads/master/config/formatter/eclipse-formatter.xml'
+def formatterUrl = 'https://raw.githubusercontent.com/hmcts/api-cp-code-style/refs/heads/main/config/formatter/eclipse-formatter.xml'
 def formatterPath = "$buildDir/eclipse-formatter.xml"
 tasks.register('downloadFormatter') {
   outputs.file(formatterPath)
