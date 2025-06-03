@@ -34,13 +34,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CourtHouse"
+                $ref: "#/components/schemas/CourtHouseResponse"
         '400':
           description: bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
 components:
   schemas:
-    CourtHouse:
+    CourtHouseResponse:
       description: The court house that owns the court rooms
       type: object
       properties:
@@ -150,3 +154,23 @@ components:
                     default: ''
                     example: 'UK'
                 additionalProperties: false
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Machine-readable error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: object
+          additionalProperties: true
+          description: Additional error context
+        timestamp:
+          type: string
+          format: date-time
+        traceId:
+          type: string
+          description: Unique identifier for error tracing
