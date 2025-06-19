@@ -239,7 +239,7 @@ tasks.withType(Checkstyle).configureEach {
 }
 
 ext {
-  springBootVersion = "3.5.0"
+  springBootVersion = "3.5.1"
   lombokVersion = "1.18.38"
 }
 
