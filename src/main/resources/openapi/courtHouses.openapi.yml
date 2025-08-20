@@ -14,10 +14,10 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 
 paths:
-  /courthouses/{court_id}:
+  /courthouses/{court_id}/courtroom/{court_room_id}:
     get:
-      description: Retrieve details of a court house by court_id
-      operationId: getCourthouseByCourtId
+      description: Retrieve details of a court house by court_id and court_room_id
+      operationId: getCourthouseByCourtIdAndCourtRoomId
       tags:
         - court house
       parameters:
@@ -25,6 +25,12 @@ paths:
           name: court_id
           required: true
           description: Unique reference number for the court house
+          schema:
+            type: string
+        - in: path
+          name: court_room_id
+          required: true
+          description: Unique identifier for the court room
           schema:
             type: string
 
