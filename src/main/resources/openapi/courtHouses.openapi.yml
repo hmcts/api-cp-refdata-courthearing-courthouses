@@ -14,7 +14,7 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 
 paths:
-  /courthouses/{court_id}/courtroom/{court_room_id}:
+  /courthouses/{court_id}/courtrooms/{court_room_id}:
     get:
       description: Retrieve details of a court house by court_id and court_room_id
       operationId: getCourthouseByCourtIdAndCourtRoomId
