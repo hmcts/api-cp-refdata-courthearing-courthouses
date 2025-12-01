@@ -1,12 +1,14 @@
 plugins {
   id 'java'
   id 'org.openapi.generator' version '7.17.0'
+  id 'org.springframework.boot' version '4.0.0'
   id 'com.diffplug.spotless' version '8.1.0'
   id 'jacoco'
   id 'maven-publish'
   id "com.github.ben-manes.versions" version "0.53.0"
   id "org.cyclonedx.bom" version "3.1.0"
   id 'pmd'
+  id 'com.gorylenko.gradle-git-properties' version '2.5.4'
 }
 
 group = 'uk.gov.hmcts.cp'
@@ -23,8 +25,20 @@ apply {
 }
 
 ext {
-  springBootVersion = "3.3.4"     // real version
+  springBootVersion = "4.0.0"
   lombokVersion = "1.18.38"
+}
+
+springBoot {
+  buildInfo()
+}
+
+bootJar {
+  enabled = false
+}
+
+jar {
+  enabled = true
 }
 
 dependencies {
