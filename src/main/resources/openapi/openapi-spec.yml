@@ -47,6 +47,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+        '401':
+          description: Your JWT token failed validation
 
 components:
   schemas:
