@@ -9,3 +9,4 @@ Further documentation see the [API Template repository readme](https://github.co
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
