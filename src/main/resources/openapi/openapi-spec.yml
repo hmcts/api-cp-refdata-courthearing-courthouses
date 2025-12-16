@@ -1,4 +1,5 @@
 openapi: 3.0.0
+
 servers:
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/HMCTS-DTS/api-cp-refdata-courthearing-courthouses/0.0.0
@@ -12,6 +13,10 @@ info:
   license:
     name: MIT
     url: 'https://opensource.org/licenses/MIT'
+
+tags:
+  - name: court house
+    description: Operations related to court houses and court rooms
 
 paths:
   /courthouses/{court_id}/courtrooms/{court_room_id}:
@@ -58,7 +63,7 @@ components:
         courtRoomId:
           description: Ref data id (EPIMS or OU Court id)
           type: integer
-          example: "101"
+          example: 101
         courtRoomName:
           description: Name for the court room
           type: string
