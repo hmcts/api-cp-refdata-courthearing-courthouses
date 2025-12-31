@@ -7,6 +7,8 @@ import uk.gov.hmcts.cp.openapi.model.CourtHouseResponse;
 import uk.gov.hmcts.cp.openapi.model.CourtRoom;
 import uk.gov.hmcts.cp.openapi.model.ErrorResponse;
 import uk.gov.hmcts.cp.openapi.model.VenueContact;
+import java.lang.reflect.Field;
+import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -41,5 +43,13 @@ public class OpenApiObjectsTest {
     void generated_api_should_have_expected_methods() {
         assertThat(CourtHouseApi.PATH_GET_COURTHOUSE_BY_COURT_ID_AND_COURT_ROOM_ID).isEqualTo("/courthouses/{court_id}/courtrooms/{court_room_id}");
         assertThat(CourtHouseApi.class).hasDeclaredMethods("getCourthouseByCourtIdAndCourtRoomId");
+    }
+    @Test
+    void generated_error_response_timestamp_should_be_instant() throws Exception {
+        Field timestampField = ErrorResponse.class.getDeclaredField("timestamp");
+
+        assertThat(timestampField.getType())
+                .as("timestamp field type")
+                .isEqualTo(Instant.class);
     }
 }
