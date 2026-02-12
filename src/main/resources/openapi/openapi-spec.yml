@@ -15,10 +15,10 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 
 tags:
-  - name: Court House With Court Room
-    description: Operations related to court houses and court rooms
+  - name: Court Room
+    description: Operations related to court room
   - name: Court House
-    description: Operations related to court houses
+    description: Operations related to court house
 
 paths:
   /courthouses/{court_id}/courtrooms/{court_room_id}:
@@ -26,7 +26,7 @@ paths:
       description: Retrieve details of a court house by court_id and court_room_id
       operationId: getCourthouseByCourtIdAndCourtRoomId
       tags:
-        - Court House With Court Room
+        - Court Room
       parameters:
         - in: path
           name: court_id
@@ -54,7 +54,7 @@ paths:
                 $ref: "#/components/schemas/CourtHouseResponse"
               examples:
                 Court_House_With_Court_Room:
-                  summary: Court House with Court Room
+                  summary: Court Room
                   value:
                     courtHouseType: crown
                     courtHouseCode: LND001
@@ -133,11 +133,38 @@ components:
         courtRoomId:
           description: Ref data id (EPIMS or OU Court id)
           type: integer
-          example: 101
         courtRoomName:
           description: Name for the court room
           type: string
-          example: "Courtroom A"
+      additionalProperties: false
+
+    VenueContact:
+      type: object
+      properties:
+        venueTelephone:
+          description: Telephone number for the venue
+          title: Venue Telephone
+          type: string
+          default: ''
+          pattern: "^.*$"
+        venueEmail:
+          description: Email for the venue
+          title: Venue Email
+          type: string
+          default: ''
+          pattern: "^.*$"
+        primaryContactName:
+          description: Name for contact of court
+          title: Primary Contact Name
+          type: string
+          default: ''
+          pattern: "^.*$"
+        venueSupport:
+          description: National contact number for MOJ Courts and Venues
+          title: Venue Support
+          type: string
+          default: ''
+          pattern: "^.*$"
       additionalProperties: false
 
     VenueContact:
@@ -180,33 +207,27 @@ components:
           description: Address Line 1
           type: string
           default: ''
-          example: 'Thomas More Building'
         address2:
           description: Address Line 2
           type: string
           default: ''
-          example: 'Royal Courts of Justice'
         address3:
           description: Address Line 3
           type: string
           default: ''
-          example: 'Strand'
         address4:
           description: Address Line 4
           type: string
           default: ''
-          example: 'London'
         postalCode:
           description: UK postcode
           type: string
           default: ''
-          example: 'WC2A 2LL'
           pattern: "^(([gG][iI][rR] {0,}0[aA]{2})|(([aA][sS][cC][nN]|[sS][tT][hH][lL]|[tT][dD][cC][uU]|[bB][bB][nN][dD]|[bB][iI][qQ][qQ]|[fF][iI][qQ][qQ]|[pP][cC][rR][nN]|[sS][iI][qQ][qQ]|[iT][kK][cC][aA]) {0,}1[zZ]{2})|((([a-pr-uwyzA-PR-UWYZ][a-hk-yxA-HK-XY]?[0-9][0-9]?)|(([a-pr-uwyzA-PR-UWYZ][0-9][a-hjkstuwA-HJKSTUW])|([a-pr-uwyzA-PR-UWYZ][a-hk-yA-HK-Y][0-9][abehmnprv-yABEHMNPRV-Y]))) {0,}[0-9][abd-hjlnp-uw-zABD-HJLNP-UW-Z]{2}))$"
         country:
           description: United Kingdom
           type: string
           default: ''
-          example: 'UK'
       additionalProperties: false
 
     CourtHouseResponse:
@@ -218,15 +239,12 @@ components:
           enum:
             - crown
             - magistrate
-          example: "crown"
         courtHouseCode:
           description: Links to the court that is responsible for the courtrooms
           type: string
-          example: "LND001"
         courtHouseName:
           description: Name of the court house
           type: string
-          example: "Central London County Court"
         address:
           $ref: '#/components/schemas/Address'
         courtRoom:
