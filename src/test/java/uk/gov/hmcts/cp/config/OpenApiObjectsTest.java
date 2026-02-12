@@ -2,6 +2,7 @@ package uk.gov.hmcts.cp.config;
 
 import org.junit.jupiter.api.Test;
 import uk.gov.hmcts.cp.openapi.api.CourtHouseApi;
+import uk.gov.hmcts.cp.openapi.api.CourtHouseWithCourtRoomApi;
 import uk.gov.hmcts.cp.openapi.model.Address;
 import uk.gov.hmcts.cp.openapi.model.CourtHouseResponse;
 import uk.gov.hmcts.cp.openapi.model.CourtRoom;
@@ -40,10 +41,17 @@ public class OpenApiObjectsTest {
     }
 
     @Test
-    void generated_api_should_have_expected_methods() {
-        assertThat(CourtHouseApi.PATH_GET_COURTHOUSE_BY_COURT_ID_AND_COURT_ROOM_ID).isEqualTo("/courthouses/{court_id}/courtrooms/{court_room_id}");
-        assertThat(CourtHouseApi.class).hasDeclaredMethods("getCourthouseByCourtIdAndCourtRoomId");
+    void generated_court_house_with_court_room_api_should_have_expected_methods() {
+        assertThat(CourtHouseWithCourtRoomApi.PATH_GET_COURTHOUSE_BY_COURT_ID_AND_COURT_ROOM_ID).isEqualTo("/courthouses/{court_id}/courtrooms/{court_room_id}");
+        assertThat(CourtHouseWithCourtRoomApi.class).hasDeclaredMethods("getCourthouseByCourtIdAndCourtRoomId");
     }
+
+    @Test
+    void generated_court_house_api_should_have_expected_methods() {
+        assertThat(CourtHouseApi.PATH_GET_COURTHOUSE_BY_COURT_ID).isEqualTo("/courthouses/{court_id}");
+        assertThat(CourtHouseApi.class).hasDeclaredMethods("getCourthouseByCourtId");
+    }
+
     @Test
     void generated_error_response_timestamp_should_be_instant() throws Exception {
         Field timestampField = ErrorResponse.class.getDeclaredField("timestamp");

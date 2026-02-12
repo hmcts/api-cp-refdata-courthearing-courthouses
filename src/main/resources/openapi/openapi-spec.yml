@@ -65,7 +65,7 @@ paths:
                       address3: Strand
                       address4: London
                       postalCode: WC2A 2LL
-                      country": UK
+                      country: UK
                     courtRoom: [ {
                       courtRoomId: 101,
                       courtRoomName: Courtroom A
@@ -115,7 +115,7 @@ paths:
                       address3: Strand
                       address4: London
                       postalCode: WC2A 2LL
-                      country": UK
+                      country: UK
         '400':
           description: bad input parameter
           content:
