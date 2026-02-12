@@ -15,9 +15,9 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 
 tags:
-  - name: court house with court room
+  - name: Court House With Court Room
     description: Operations related to court houses and court rooms
-  - name: court house
+  - name: Court House
     description: Operations related to court houses
 
 paths:
@@ -26,7 +26,7 @@ paths:
       description: Retrieve details of a court house by court_id and court_room_id
       operationId: getCourthouseByCourtIdAndCourtRoomId
       tags:
-        - court house with court room
+        - Court House With Court Room
       parameters:
         - in: path
           name: court_id
@@ -84,7 +84,7 @@ paths:
       description: Retrieve details of a court house by court_id
       operationId: getCourthouseByCourtId
       tags:
-        - court house
+        - Court House
       parameters:
         - in: path
           name: court_id
