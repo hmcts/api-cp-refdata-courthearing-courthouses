@@ -7,7 +7,6 @@ import uk.gov.hmcts.cp.openapi.model.Address;
 import uk.gov.hmcts.cp.openapi.model.CourtHouseResponse;
 import uk.gov.hmcts.cp.openapi.model.CourtRoom;
 import uk.gov.hmcts.cp.openapi.model.ErrorResponse;
-import uk.gov.hmcts.cp.openapi.model.VenueContact;
 import java.lang.reflect.Field;
 import java.time.Instant;
 
@@ -33,11 +32,6 @@ public class OpenApiObjectsTest {
     @Test
     void generated_court_room_should_have_expected_fields() {
         assertThat(CourtRoom.class).hasDeclaredFields("courtRoomId", "courtRoomName");
-    }
-
-    @Test
-    void generated_venue_contact_should_have_expected_fields() {
-        assertThat(VenueContact.class).hasDeclaredFields("venueTelephone", "venueEmail", "primaryContactName", "venueSupport");
     }
 
     @Test
