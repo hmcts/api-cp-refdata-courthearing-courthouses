@@ -15,8 +15,10 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 
 tags:
-  - name: court house
+  - name: court house with court room
     description: Operations related to court houses and court rooms
+  - name: court house
+    description: Operations related to court houses
 
 paths:
   /courthouses/{court_id}/courtrooms/{court_room_id}:
@@ -24,7 +26,7 @@ paths:
       description: Retrieve details of a court house by court_id and court_room_id
       operationId: getCourthouseByCourtIdAndCourtRoomId
       tags:
-        - court house
+        - court house with court room
       parameters:
         - in: path
           name: court_id
@@ -50,6 +52,70 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CourtHouseResponse"
+              examples:
+                Court_House_With_Court_Room:
+                  summary: Court House with Court Room
+                  value:
+                    courtHouseType: crown
+                    courtHouseCode: LND001
+                    courtHouseName: Central London County Court
+                    address:
+                      address1: Thomas More Building
+                      address2: Royal Courts of Justice
+                      address3: Strand
+                      address4: London
+                      postalCode: WC2A 2LL
+                      country": UK
+                    courtRoom: [ {
+                      courtRoomId: 101,
+                      courtRoomName: Courtroom A
+                    } ]
+        '400':
+          description: bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '401':
+          description: Your JWT token failed validation
+
+  /courthouses/{court_id}:
+    get:
+      description: Retrieve details of a court house by court_id
+      operationId: getCourthouseByCourtId
+      tags:
+        - court house
+      parameters:
+        - in: path
+          name: court_id
+          required: true
+          description: Unique identifier for the court house
+          schema:
+            type: string
+            format: uuid
+          example: "57323172-1083-454d-8ab7-2455a8b993e7"
+
+      responses:
+        '200':
+          description: court details found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourtHouseResponse"
+              examples:
+                Court_House:
+                  summary: Court House
+                  value:
+                    courtHouseType: crown
+                    courtHouseCode: LND001
+                    courtHouseName: Central London County Court
+                    address:
+                      address1: Thomas More Building
+                      address2: Royal Courts of Justice
+                      address3: Strand
+                      address4: London
+                      postalCode: WC2A 2LL
+                      country": UK
         '400':
           description: bad input parameter
           content:
