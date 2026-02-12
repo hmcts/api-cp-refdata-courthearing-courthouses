@@ -15,8 +15,10 @@ info:
     url: 'https://opensource.org/licenses/MIT'
 
 tags:
-  - name: court house
-    description: Operations related to court houses and court rooms
+  - name: Court Room
+    description: Operations related to court room
+  - name: Court House
+    description: Operations related to court house
 
 paths:
   /courthouses/{court_id}/courtrooms/{court_room_id}:
@@ -24,7 +26,7 @@ paths:
       description: Retrieve details of a court house by court_id and court_room_id
       operationId: getCourthouseByCourtIdAndCourtRoomId
       tags:
-        - court house
+        - Court Room
       parameters:
         - in: path
           name: court_id
@@ -50,6 +52,70 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CourtHouseResponse"
+              examples:
+                Court_House_With_Court_Room:
+                  summary: Court Room
+                  value:
+                    courtHouseType: crown
+                    courtHouseCode: LND001
+                    courtHouseName: Central London County Court
+                    address:
+                      address1: Thomas More Building
+                      address2: Royal Courts of Justice
+                      address3: Strand
+                      address4: London
+                      postalCode: WC2A 2LL
+                      country: UK
+                    courtRoom: [ {
+                      courtRoomId: 101,
+                      courtRoomName: Courtroom A
+                    } ]
+        '400':
+          description: bad input parameter
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '401':
+          description: Your JWT token failed validation
+
+  /courthouses/{court_id}:
+    get:
+      description: Retrieve details of a court house by court_id
+      operationId: getCourthouseByCourtId
+      tags:
+        - Court House
+      parameters:
+        - in: path
+          name: court_id
+          required: true
+          description: Unique identifier for the court house
+          schema:
+            type: string
+            format: uuid
+          example: "57323172-1083-454d-8ab7-2455a8b993e7"
+
+      responses:
+        '200':
+          description: court details found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CourtHouseResponse"
+              examples:
+                Court_House:
+                  summary: Court House
+                  value:
+                    courtHouseType: crown
+                    courtHouseCode: LND001
+                    courtHouseName: Central London County Court
+                    address:
+                      address1: Thomas More Building
+                      address2: Royal Courts of Justice
+                      address3: Strand
+                      address4: London
+                      postalCode: WC2A 2LL
+                      country: UK
         '400':
           description: bad input parameter
           content:
@@ -72,39 +138,6 @@ components:
           description: Name for the court room
           type: string
           example: "Courtroom A"
-      additionalProperties: false
-
-    VenueContact:
-      type: object
-      properties:
-        venueTelephone:
-          description: Telephone number for the venue
-          title: Venue Telephone
-          type: string
-          default: ''
-          example: '01772 844700'
-          pattern: "^.*$"
-        venueEmail:
-          description: Email for the venue
-          title: Venue Email
-          type: string
-          default: ''
-          example: 'court1@moj.gov.uk'
-          pattern: "^.*$"
-        primaryContactName:
-          description: Name for contact of court
-          title: Primary Contact Name
-          type: string
-          default: ''
-          example: 'Name'
-          pattern: "^.*$"
-        venueSupport:
-          description: National contact number for MOJ Courts and Venues
-          title: Venue Support
-          type: string
-          default: ''
-          example: '0330 566 5561'
-          pattern: "^.*$"
       additionalProperties: false
 
     Address:

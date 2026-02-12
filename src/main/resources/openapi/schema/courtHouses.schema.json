@@ -46,10 +46,6 @@
                 "description": "Name for the court room",
                 "type": "string"
               },
-              "venueContact": {
-                "description": "Contact details for the venue",
-                "$ref": "#/$defs/venueContact"
-              },
               "address": {
                 "description": "Courthouse address",
                 "$ref": "#/$defs/address"
