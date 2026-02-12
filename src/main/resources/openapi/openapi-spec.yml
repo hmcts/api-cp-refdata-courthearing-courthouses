@@ -140,39 +140,6 @@ components:
           example: "Courtroom A"
       additionalProperties: false
 
-    VenueContact:
-      type: object
-      properties:
-        venueTelephone:
-          description: Telephone number for the venue
-          title: Venue Telephone
-          type: string
-          default: ''
-          example: '01772 844700'
-          pattern: "^.*$"
-        venueEmail:
-          description: Email for the venue
-          title: Venue Email
-          type: string
-          default: ''
-          example: 'court1@moj.gov.uk'
-          pattern: "^.*$"
-        primaryContactName:
-          description: Name for contact of court
-          title: Primary Contact Name
-          type: string
-          default: ''
-          example: 'Name'
-          pattern: "^.*$"
-        venueSupport:
-          description: National contact number for MOJ Courts and Venues
-          title: Venue Support
-          type: string
-          default: ''
-          example: '0330 566 5561'
-          pattern: "^.*$"
-      additionalProperties: false
-
     Address:
       type: object
       properties:
