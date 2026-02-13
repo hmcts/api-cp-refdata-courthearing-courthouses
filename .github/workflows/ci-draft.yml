@@ -56,7 +56,7 @@ jobs:
     name: Test - Java ${{ matrix.java }}
     strategy:
       matrix:
-        java: [ 25 ]
+        java: [ 21 ]
     runs-on: ubuntu-latest
     needs: [ Artefact-Version, Update-Spec-Version ]
 
@@ -103,7 +103,7 @@ jobs:
     needs: [ Artefact-Version, Push-Draft-OpenAPI-Spec ]
     strategy:
       matrix:
-        java: [ 25 ]
+        java: [ 21 ]
 
     steps:
       - name: Checkout source code
