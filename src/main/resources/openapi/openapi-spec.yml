@@ -1,8 +1,12 @@
 openapi: 3.0.0
 
 servers:
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/HMCTS-DTS/api-cp-refdata-courthearing-courthouses/0.0.0
+  - description: Refdata Court Hearing Court Houses API
+    url: https://api-cp-refdata-courthearing-courthouses.net/{version}
+    variables:
+      version:
+        default: 0.0.0
+        description: API version; matches the spec info.version
 
 info:
   title: Common Platform API Refdata Court Hearing Court Houses
