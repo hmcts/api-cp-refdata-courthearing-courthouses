@@ -10,7 +10,13 @@ servers:
 
 info:
   title: Common Platform API Refdata Court Hearing Court Houses
-  description: Reference Data API providing information on Court Houses associated with a Court Hearing
+  description: |
+    Provides information about court buildings and the rooms within them.
+
+    Returns the building name, postal address, and room details for a given court.
+    Used by listing officers and court diary systems to show where a hearing is
+    taking place — for example when printing a hearing notice or populating a
+    daily court list.
   version: 0.0.0
   contact:
     email: no-reply@hmcts.com
