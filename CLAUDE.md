@@ -64,7 +64,9 @@ Security: Bearer JWT auth.
 
 ## CI/CD Deviations
 
-Standard workflow set — no deviations: `ci-draft.yml`, `ci-released.yml`, `lint-openapi.yml`, `code-analysis.yml`, `codeql.yml`, `secrets-scanner.yml`, `publish-openapi-spec.yml`.
+Standard workflow set: `ci-draft.yml`, `ci-released.yml`, `lint-openapi.yml`, `code-analysis.yml`, `codeql.yml`, `secrets-scanner.yml`, `publish-api-docs.yml`.
+
+Plus `terraform-infra.yaml` — APIM registration (plan on PR, apply on merge to `main`), matching slc/pcd/pcr/hrds. See `infrastructure/README.md`.
 
 ## Repo-Specific Notes
 
