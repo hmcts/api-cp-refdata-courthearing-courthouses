@@ -24,16 +24,16 @@ import {
 }
 
 import {
-  to = module.apis["courthouses"].azurerm_api_management_api.api
+  to = module.apis["courthouse"].azurerm_api_management_api.api
   id = "${local.apim_base}/apis/${local.apim_api};rev=1"
 }
 
 import {
-  to = module.apis["courthouses"].azurerm_api_management_product_api.link_to_product[0]
+  to = module.apis["courthouse"].azurerm_api_management_product_api.link_to_product[0]
   id = "${local.apim_base}/products/cp-refdata-courthearing/apis/${local.apim_api}"
 }
 
 import {
-  to = azurerm_api_management_api_policy.api_policy["courthouses"]
+  to = azurerm_api_management_api_policy.api_policy["courthouse"]
   id = "${local.apim_base}/apis/${local.apim_api}/policies/policy"
 }
