@@ -14,12 +14,12 @@ entra_tenant_id = "d44f885c-4fac-47bf-afde-d7d861ec4d7b"
 entra_client_id = "30288840-e345-4543-99ee-f9253d789339"
 
 apis = {
-  courthouses = {
+  courthouse = {
     openapi_spec_path = "../src/main/resources/openapi/openapi-spec.yml"
-    display_name      = "Refdata Court Hearing Court Houses API"
-    path              = "amp/courthouses"
+    display_name      = "Crime Ref Data Court Hearing Courthouse API (rcc)"
+    path              = "amp/rcc"
     service_host      = "devamp01-appgw.dev.nl.cjscp"
-    service_path      = "/courthouses"
+    service_path      = "/rcc"
     revision          = "1"
   }
 }
